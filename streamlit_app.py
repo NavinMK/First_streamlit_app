@@ -25,3 +25,5 @@ fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+ fruit_ch
 fruitvice_jsonnormalized = pandas.json_normalize(fruityvice_response.json())
 #streamlit.text(fruityvice_response.json())
 streamlit.dataframe(fruitvice_jsonnormalized)
+fruit_sfselect = streamlit.text_input("what fruit would you like to add?",'jackfruit')
+streamlit.text("Thanks for adding"+fruit_sfselect)
