@@ -19,7 +19,7 @@ streamlit.title("My Parents New Healthy Diner")
 streamlit.header("Breakfast Menu")
 streamlit.text("🍝Omega 3 & Blueberry Oatmeal")
 streamlit.text("🦪🥪Avacado Toast")
-
+#gets the fruit details from fruityvice
 def get_fruityvice_data(this_fruit_choice):
     fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+ fruit_choice)
     fruitvice_jsonnormalized = pandas.json_normalize(fruityvice_response.json())
@@ -41,9 +41,15 @@ try:
 except URLError as e:
     streamlit.error()
 #streamlit.text(fruityvice_response.json())
-
+#insert a row into snowflake
+def insert_row_snowflake(new_fruit):
+    with my_cnx.cursor() as my_cur:
+        my_cur.execute("insert into fruit_load_list values ('from streamlit')")
+        return "Thanks for adding " + new_fruit
 
 streamlit.write('The user entered',fruit_choice)
-fruit_sfselect = streamlit.text_input("what fruit would you like to add?",'jackfruit')
-streamlit.text("Thanks for adding"+fruit_sfselect)
-my_cur.execute("insert into fruit_load_list values ('from streamlit')")
+add_my_fruit = streamlit.text_input("what fruit would you like to add?"
+if streamlit.button('Add a Fruit to the List'):
+    my_cnx= snowflake.connector.connect(**streamlit.secrets["snowflake"])
+    back_from_function = insert_row_snowflake(add_my_fruit)
+    streamlit.text(back_from_function)
