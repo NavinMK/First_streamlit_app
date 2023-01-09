@@ -44,7 +44,7 @@ except URLError as e:
 #insert a row into snowflake
 def insert_row_snowflake(new_fruit):
     with my_cnx.cursor() as my_cur:
-        my_cur.execute("insert into fruit_load_list values ('from streamlit')")
+        my_cur.execute("insert into fruit_load_list values ('" + new_fruit + "')")
         return "Thanks for adding " + new_fruit
 
 streamlit.write('The user entered',fruit_choice)
